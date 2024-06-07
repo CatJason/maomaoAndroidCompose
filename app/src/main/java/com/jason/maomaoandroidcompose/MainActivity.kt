@@ -2,6 +2,8 @@ package com.jason.maomaoandroidcompose
 
 import MaoMaoAndroidComposeTheme
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -25,6 +27,12 @@ import androidx.navigation.compose.rememberNavController
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        // Make the activity full screen
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         setContent {
             MaoMaoAndroidComposeTheme {
                 Surface(color = MaterialTheme.colors.background) {
@@ -57,14 +65,46 @@ class MainActivity : ComponentActivity() {
                 BottomNavigationItem(
                     icon = {
                         when (item) {
-                            "Home" -> Image(painterResource(id = R.drawable.home), contentDescription = null, modifier = Modifier.size(30.dp))
-                            "Discover" -> Image(painterResource(id = R.drawable.discover), contentDescription = null, modifier = Modifier.size(30.dp))
-                            "Send" -> Image(painterResource(id = R.drawable.send), contentDescription = null, modifier = Modifier.size(30.dp))
-                            "Message" -> Image(painterResource(id = R.drawable.message), contentDescription = null, modifier = Modifier.size(30.dp))
-                            "My" -> Image(painterResource(id = R.drawable.my), contentDescription = null, modifier = Modifier.size(30.dp))
+                            "Home" -> Image(
+                                painterResource(id = R.drawable.home),
+                                contentDescription = null,
+                                modifier = Modifier.size(30.dp)
+                            )
+
+                            "Discover" -> Image(
+                                painterResource(id = R.drawable.discover),
+                                contentDescription = null,
+                                modifier = Modifier.size(30.dp)
+                            )
+
+                            "Send" -> Image(
+                                painterResource(id = R.drawable.send),
+                                contentDescription = null,
+                                modifier = Modifier.size(30.dp)
+                            )
+
+                            "Message" -> Image(
+                                painterResource(id = R.drawable.message),
+                                contentDescription = null,
+                                modifier = Modifier.size(30.dp)
+                            )
+
+                            "My" -> Image(
+                                painterResource(id = R.drawable.my),
+                                contentDescription = null,
+                                modifier = Modifier.size(30.dp)
+                            )
                         }
                     },
-                    label = { Text(item) },
+                    label = {
+                        when (item) {
+                            "Home" -> Text("首页")
+                            "Discover" -> Text("发现")
+                            "Send" -> Text("发送")
+                            "Message" -> Text("消息")
+                            "My" -> Text("我的")
+                        }
+                    },
                     selected = selectedItem.value == index,
                     onClick = {
                         selectedItem.value = index
