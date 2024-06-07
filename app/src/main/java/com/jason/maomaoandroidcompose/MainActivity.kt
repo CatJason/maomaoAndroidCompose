@@ -6,6 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -82,11 +84,43 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun NavigationHost(navController: NavHostController, modifier: Modifier = Modifier) {
         NavHost(navController, startDestination = "home", modifier = modifier) {
-            composable("home") { ScreenContent("Home Screen") }
+            composable("home") { HomeScreen() }
             composable("discover") { ScreenContent("Discover Screen") }
             composable("send") { ScreenContent("Send Screen") }
             composable("message") { ScreenContent("Message Screen") }
             composable("my") { ScreenContent("My Screen") }
+        }
+    }
+
+    @Composable
+    fun HomeScreen() {
+        val imageList = List(18) { index ->
+            when (index % 6) {
+                0 -> R.drawable.image0
+                1 -> R.drawable.image1
+                2 -> R.drawable.image2
+                3 -> R.drawable.image3
+                4 -> R.drawable.image4
+                5 -> R.drawable.image5
+                else -> R.drawable.image0 // Fallback case, should never happen
+            }
+        }
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            items(imageList) { imageRes ->
+                Image(
+                    painter = painterResource(id = imageRes),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .padding(bottom = 8.dp)
+                )
+            }
         }
     }
 
